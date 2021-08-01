@@ -33,7 +33,7 @@ jobs:
       - name: Build
         run: sam build \
             -t ~/sam-sample-application/sam-sample-application/sam-sample/dev-template.yaml \
-            -b ~/sam-sample/build/dev-template.yaml
+            -b ~/sam-sample-application/sam-sample-application/sam-sample/build/dev-template.yaml
 
       - name: Deploy
         run: sam deploy \
