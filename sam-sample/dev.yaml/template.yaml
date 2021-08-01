@@ -1,0 +1,67 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: 'python3.8
+
+  Sample SAM Template for sam-sample
+
+  '
+Globals:
+  Function:
+    Timeout: 3
+    Environment:
+      Variables:
+        Environment: Development
+Resources:
+  Lambda1:
+    Type: AWS::Serverless::Function
+    Properties:
+      PackageType: Image
+      CodeUri: ../lambda1
+      Events:
+        Lambda1Api:
+          Type: Api
+          Properties:
+            Path: /lambda1
+            Method: post
+      ImageUri: lambda1:python3.8-v1
+    Metadata:
+      Dockerfile: Dockerfile
+      DockerContext: ./lambda1
+      DockerTag: python3.8-v1
+  Lambda2:
+    Type: AWS::Serverless::Function
+    Properties:
+      PackageType: Image
+      CodeUri: ../lambda2
+      Events:
+        Lambda2Api:
+          Type: Api
+          Properties:
+            Path: /lambda2
+            Method: post
+      ImageUri: lambda2:python3.8-v1
+    Metadata:
+      Dockerfile: Dockerfile
+      DockerContext: ./lambda2
+      DockerTag: python3.8-v1
+Outputs:
+  Lambda1Api:
+    Description: API Gateway endpoint URL for Dev stage for Lambda1 function
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Dev/lambda1/
+  Lambda1Function:
+    Description: Lambda1 Function ARN
+    Value:
+      Fn::GetAtt:
+      - Lambda1
+      - Arn
+  Lambda2Api:
+    Description: API Gateway endpoint URL for Dev stage for Lambda2 function
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Dev/lambda2/
+  Lambda2Function:
+    Description: Lambda2 Function ARN
+    Value:
+      Fn::GetAtt:
+      - Lambda2
+      - Arn
