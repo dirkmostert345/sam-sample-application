@@ -25,11 +25,11 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Build
-        run: sam build -t dev-template.yaml -b build/dev-template.yaml
+        run: sam build -t sam-sample-application/dev-template.yaml -b ./build/dev-template.yaml
 
       - name: Deploy
         run: sam deploy \
-            --template build/dev-template.yaml
+            --template ./build/dev-template.yaml
             --no-confirm-changeset \
             --no-fail-on-empty-changeset \
             --stack-name ${{ secrets.STACK_NAME_DEV }} \
