@@ -28,11 +28,9 @@ jobs:
         run: sam build -t sam-sample/dev-template.yaml -b sam-sample/build/dev-template.yaml
 
       - name: Deploy
-        run: sam deploy \
-            --template sam-sample/build/dev-template.yaml \
+        run: sam deploy --template sam-sample/build/dev-template.yaml \
             --no-confirm-changeset \
-            --no-fail-on-empty-changeset \
-            --stack-name sam-sample-dev \
+            --stack-name ${{ secrets.STACK_NAME_DEV }}  \
             --capabilities CAPABILITY_IAM \
             --image-repositories Lambda1=${{ secrets.LAMBDA1_ECR_DEV }} \
             --image-repositories Lambda2=${{ secrets.LAMBDA2_ECR_DEV }}
