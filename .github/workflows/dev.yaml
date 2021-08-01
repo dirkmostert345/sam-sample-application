@@ -40,5 +40,5 @@ jobs:
             --no-fail-on-empty-changeset \
             --stack-name ${{ secrets.STACK_NAME_DEV }} \
             --capabilities CAPABILITY_IAM \
-            --image-repositories Lambda1={{ secrets.LAMBDA1_ECR_DEV }}
-            --image-repositories Lambda2={{ secrets.LAMBDA2_ECR_DEV }}
+            --image-repositories Lambda1=${{ secrets.LAMBDA1_ECR_DEV }}
+            --image-repositories Lambda2=${{ secrets.LAMBDA2_ECR_DEV }}
