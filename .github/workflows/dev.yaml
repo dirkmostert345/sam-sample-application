@@ -24,21 +24,15 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-      - name: GetDir
-        run: pwd
-
-      - name: LS
-        run: ls -al
-
       - name: Build
         run: sam build -t sam-sample/dev-template.yaml -b sam-sample/build/dev-template.yaml
 
       - name: Deploy
         run: sam deploy \
-            --template sam-sample/build/dev-template.yaml
+            --template sam-sample/build/dev-template.yaml \
             --no-confirm-changeset \
             --no-fail-on-empty-changeset \
             --stack-name ${{ secrets.STACK_NAME_DEV }} \
             --capabilities CAPABILITY_IAM \
-            --image-repositories Lambda1=${{ secrets.LAMBDA1_ECR_DEV }}
+            --image-repositories Lambda1=${{ secrets.LAMBDA1_ECR_DEV }} \
             --image-repositories Lambda2=${{ secrets.LAMBDA2_ECR_DEV }}
