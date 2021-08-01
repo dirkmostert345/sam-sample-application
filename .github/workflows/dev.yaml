@@ -31,13 +31,11 @@ jobs:
         run: ls -al
 
       - name: Build
-        run: sam build \
-            -t ~/sam-sample-application/sam-sample-application/sam-sample/dev-template.yaml \
-            -b ~/sam-sample-application/sam-sample-application/sam-sample/build/dev-template.yaml
+        run: sam build -t /sam-sample/dev-template.yaml -b /sam-sample/build/dev-template.yaml
 
       - name: Deploy
         run: sam deploy \
-            --template ~/sam-sample-application/sam-sample-application/sam-sample/build/dev-template.yaml
+            --template /sam-sample/build/dev-template.yaml
             --no-confirm-changeset \
             --no-fail-on-empty-changeset \
             --stack-name ${{ secrets.STACK_NAME_DEV }} \
