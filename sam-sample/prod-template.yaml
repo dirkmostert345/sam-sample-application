@@ -6,56 +6,53 @@ Description: >
   Sample SAM Template for sam-sample
 Globals:
   Function:
-    Timeout: 10
+    Timeout: 3
+    Environment:
+      Variables:
+        Environment: Production
 
 Resources:
   Lambda1:
     Type: AWS::Serverless::Function
     Properties:
       PackageType: Image
+      CodeUri: ./lambda1
       Events:
-        Lambda1:
+        Lambda1Api:
           Type: Api
           Properties:
             Path: /lambda1
             Method: post
     Metadata:
       Dockerfile: Dockerfile
-      DockerContext: lambda1/app
+      DockerContext: ./lambda1
       DockerTag: python3.8-v1
-
   Lambda2:
     Type: AWS::Serverless::Function
     Properties:
       PackageType: Image
+      CodeUri: ./lambda2
       Events:
-        Lambda2:
+        Lambda2Api:
           Type: Api
           Properties:
             Path: /lambda2
-            Method: get
+            Method: post
     Metadata:
       Dockerfile: Dockerfile
-      DockerContext: lambda2/app
+      DockerContext: ./lambda2
       DockerTag: python3.8-v1
-
+  
 Outputs:
   Lambda1Api:
-    Description: "API Gateway endpoint URL for Prod stage for Lambda 1 function"
+    Description: "API Gateway endpoint URL for Dev stage for Lambda1 function"
     Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/lambda1/"
   Lambda1Function:
-    Description: "Lambda 1 Function ARN"
-    Value: !GetAtt Lambda1Function.Arn
-  Lambda1FunctionIamRole:
-    Description: "Implicit IAM Role created for Lambda 1function"
-    Value: !GetAtt Lambda1FunctionIamRole.Arn
-
+    Description: "Lambda1 Function ARN"
+    Value: !GetAtt Lambda1.Arn
   Lambda2Api:
-    Description: "API Gateway endpoint URL for Prod stage for Lambda 2 function"
+    Description: "API Gateway endpoint URL for Dev stage for Lambda2 function"
     Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/lambda2/"
   Lambda2Function:
-    Description: "Lambda 2 Function ARN"
-    Value: !GetAtt Lambda2Function.Arn
-  Lambda2FunctionIamRole:
-    Description: "Implicit IAM Role created for Lambda 2 function"
-    Value: !GetAtt Lambda2FunctionIamRole.Arn
+    Description: "Lambda2 Function ARN"
+    Value: !GetAtt Lambda2.Arn
